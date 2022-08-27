@@ -1,0 +1,33 @@
+{
+    "name": "btc-uah-api",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "node ./src/bin/www",
+        "eslint:fix": "eslint src/ --fix",
+        "eslint:check": "eslint src/",
+        "format:fix": "prettier --write src/",
+        "format:check": "prettier --check src/",
+        "prepare": "husky install"
+    },
+    "dependencies": {
+        "body-parser": "^1.20.0",
+        "coinmarketcap-api": "^3.1.1",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "dotenv": "^16.0.1",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "jade": "~1.11.0",
+        "morgan": "~1.9.1",
+        "nodemailer": "^6.7.7"
+    },
+    "devDependencies": {
+        "eslint": "^8.20.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-plugin-import": "^2.26.0",
+        "eslint-plugin-prettier": "^4.2.1",
+        "husky": "^8.0.1",
+        "prettier": "^2.7.1"
+    }
+}
