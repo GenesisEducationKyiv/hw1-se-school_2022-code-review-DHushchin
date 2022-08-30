@@ -26,9 +26,11 @@ npm install
 -   Create .env file
 
 ```bash
-API_KEY=
-EMAIL_NAME=
-EMAIL_PASSWORD=
+API_KEY='example_key'
+EMAIL_NAME='example@gmail.com'
+EMAIL_PASSWORD='example_password'
+EMAIL_HOST="smtp.gmail.com"
+EMAIL_PORT="587"
 ```
 
 -   Fill values
