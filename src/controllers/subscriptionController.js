@@ -6,7 +6,7 @@ const getRate = require('../services/rateService');
 
 const subscriptionController = {};
 
-subscriptionController.subscribe = (req, res) => {
+subscriptionController.subscribe = async (req, res) => {
     try {
         const { email } = req.body;
 
@@ -15,8 +15,8 @@ subscriptionController.subscribe = (req, res) => {
                 message: 'Invalid email',
             });
         }
-        const emails = readFile(dataPath);
-        console.log(emails);
+        const emails = await readFile(dataPath);
+
         if (isSubscribed(emails, email)) {
             res.status(409).json({
                 message: 'Email already exists',
@@ -37,7 +37,7 @@ subscriptionController.subscribe = (req, res) => {
 
 subscriptionController.sendEmails = async (req, res) => {
     try {
-        const emails = readFile(dataPath);
+        const emails = await readFile(dataPath);
 
         const mailOptions = {
             from: process.env.EMAIL_NAME,
