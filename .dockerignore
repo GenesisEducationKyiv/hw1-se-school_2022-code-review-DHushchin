@@ -1,0 +1,8 @@
+node_modules
+.eslintrc
+.eslintignore
+.prettierrc
+.gitignore
+.gitattributes
+README.md
+LICENSE
