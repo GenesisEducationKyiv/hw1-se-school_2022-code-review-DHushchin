@@ -1,19 +1,20 @@
-const fs = require('fs');
+const fsp = require('fs').promises;
 const path = require('path');
 
 const dataPath = `${path.resolve(__dirname, '..')}/data/emails.json`;
 
-const readFile = async (fileName) => {
-    const emailsData = await fs.promises.readFile(fileName, (err) => {
+const readFile = async (fileName = dataPath) => {
+    const emailsData = await fsp.readFile(fileName, (err) => {
         if (err) throw err;
     });
+
     return JSON.parse(emailsData).emails;
 };
 
-const writeFile = (fileName, data) => {
-    fs.writeFile(fileName, data, (err) => {
+const writeFile = async (data, fileName = dataPath) => {
+    await fsp.writeFile(fileName, data).catch((err) => {
         if (err) throw err;
     });
 };
 
-module.exports = Object.freeze({ readFile, writeFile, dataPath });
+module.exports = Object.freeze({ readFile, writeFile });
