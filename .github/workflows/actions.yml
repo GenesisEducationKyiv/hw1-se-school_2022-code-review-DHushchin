@@ -21,5 +21,9 @@ jobs:
             - name: Eslint working flow
               run: |
                   npm run eslint:check
+            - name: Prettier working flow
+              run: |
                   npm run format:check
+            - name: Test
+              run: |
                   npm test
