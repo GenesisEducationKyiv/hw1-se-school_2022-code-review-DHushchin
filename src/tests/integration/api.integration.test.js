@@ -44,6 +44,9 @@ describe('Integration test for API', () => {
         const { statusCode } = await request(app).post('/api/sendEmails');
 
         expect(statusCode).toBe(200);
+    });
+
+    afterAll(async () => {
         await writeFile(JSON.stringify({ emails: [] }));
     });
 });

@@ -1,6 +1,5 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
-const createError = require('http-errors');
 const logger = require('morgan');
 
 const app = express();
@@ -13,10 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/api', router);
-
-app.use((req, res, next) => {
-    next(createError(404));
-});
 
 app.use((err, req, res) => {
     res.locals.message = err.message;

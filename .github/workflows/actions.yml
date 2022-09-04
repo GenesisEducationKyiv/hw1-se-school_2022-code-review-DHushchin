@@ -24,6 +24,3 @@ jobs:
             - name: Prettier working flow
               run: |
                   npm run format:check
-            - name: Test
-              run: |
-                  npm test
