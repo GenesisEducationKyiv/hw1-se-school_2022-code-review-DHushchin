@@ -4,6 +4,7 @@
     "private": true,
     "scripts": {
         "start": "node ./src/bin/www",
+        "dev": "nodemon ./src/bin/www",
         "eslint:fix": "eslint src/ --fix",
         "eslint:check": "eslint src/",
         "format:fix": "prettier --write src/",
@@ -30,6 +31,7 @@
         "eslint-plugin-prettier": "^4.2.1",
         "husky": "^8.0.1",
         "jest": "^29.0.1",
-        "prettier": "^2.7.1"
+        "prettier": "^2.7.1",
+        "supertest": "^6.2.4"
     }
 }
