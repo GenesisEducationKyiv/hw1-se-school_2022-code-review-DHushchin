@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const isValid = require('../utils/validation');
-const { readFile, writeFile } = require('./dbService');
+const { readFile, writeFile } = require('./fileService');
 
 const isSubscribed = (emails, email) => {
     return emails.includes(email);

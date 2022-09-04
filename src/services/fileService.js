@@ -11,8 +11,8 @@ const readFile = async (fileName = dataPath) => {
     return JSON.parse(emailsData).emails;
 };
 
-const writeFile = async (data, fileName = dataPath) => {
-    await fsp.writeFile(fileName, data).catch((err) => {
+const writeFile = async (data, filePath = dataPath) => {
+    await fsp.writeFile(filePath, data).catch((err) => {
         if (err) throw err;
     });
 };

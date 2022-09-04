@@ -2,12 +2,14 @@
     "env": {
         "es6": true,
         "browser": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "extends": ["airbnb/base"],
     "plugins": [
         "prettier",
-        "import"
+        "import",
+        "jest"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -16,6 +18,7 @@
     "rules": {
         "indent": ["error", 4],
         "arrow-body-style": ["error", "always"],
-        "no-console": "off"
+        "no-console": "off",
+        "no-unused-expressions": "off"
     }
 }
