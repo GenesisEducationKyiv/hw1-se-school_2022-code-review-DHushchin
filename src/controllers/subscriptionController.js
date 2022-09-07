@@ -1,58 +1,31 @@
-const isSubscribed = require('../services/subscriptionService');
-const { transporter } = require('../services/emailService');
-const { readFile, writeFile, dataPath } = require('../services/dbService');
-const isValid = require('../utils/validation');
-const getRate = require('../services/rateService');
+const subscribe = require('../services/subscriptionService');
+const sendEmails = require('../services/emailService');
 
 const subscriptionController = {};
 
 subscriptionController.subscribe = async (req, res) => {
     try {
         const { email } = req.body;
-
-        if (!isValid(email)) {
-            res.status(400).json({
-                message: 'Invalid email',
-            });
-        }
-        const emails = await readFile(dataPath);
-
-        if (isSubscribed(emails, email)) {
-            res.status(409).json({
-                message: 'Email already exists',
-            });
-        } else {
-            emails.push(email);
-            writeFile(dataPath, JSON.stringify({ emails }));
-            res.status(200).json({
-                message: 'Email added successfully',
-            });
-        }
+        await subscribe(email);
+        res.status(200).json({
+            message: 'Email subscribed successfully',
+        });
     } catch (err) {
-        res.status(400).json({
-            message: `Bad request: ${err}`,
+        res.status(err.status).json({
+            message: err.message,
         });
     }
 };
 
 subscriptionController.sendEmails = async (req, res) => {
     try {
-        const emails = await readFile(dataPath);
-
-        const mailOptions = {
-            from: process.env.EMAIL_NAME,
-            to: emails,
-            subject: 'Bitcoin price',
-            text: `Bitcoin price is ${await getRate()} UAH`,
-        };
-
-        await transporter.sendMail(mailOptions);
+        await sendEmails();
         res.status(200).json({
             message: 'Emails sent successfully',
         });
     } catch (err) {
-        res.status(400).json({
-            message: `Bad request: ${err}`,
+        res.status(err.status).json({
+            message: err.message,
         });
     }
 };
