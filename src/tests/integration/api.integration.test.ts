@@ -1,16 +1,15 @@
-const express = require('express');
-const request = require('supertest');
-const router = require('../../routes/router');
-const { writeFile } = require('../../services/fileService');
-
-const app = express();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
-app.use('/api', router);
+import express from 'express';
+import request from 'supertest';
+import router from '../../routes/router';
+import fileService from '../../services/fileService';
+import bodyParser from 'body-parser';
 
 describe('Integration test for API', () => {
+    const app = express();
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use('/api', router);
+
     test('GET api/rate - get BTC to UAH rate', async () => {
         const { body, statusCode } = await request(app).get('/api/rate');
 
@@ -47,6 +46,6 @@ describe('Integration test for API', () => {
     });
 
     afterAll(async () => {
-        await writeFile(JSON.stringify({ emails: [] }));
+        await fileService.writeFile(JSON.stringify({ emails: [] }));
     });
 });

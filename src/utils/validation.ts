@@ -1,4 +1,4 @@
-module.exports = (email) => {
+export default (email: string) => {
     return String(email)
         .trim()
         .toLowerCase()

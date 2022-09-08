@@ -20,7 +20,7 @@ jobs:
                   npm ci
             - name: Eslint working flow
               run: |
-                  npm run eslint:check
+                  npm run tslint:check
             - name: Prettier working flow
               run: |
                   npm run format:check
