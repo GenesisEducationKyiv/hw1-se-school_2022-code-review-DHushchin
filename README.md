@@ -2,7 +2,7 @@
 
 ## Stack Technologies
 
--   JavaScript
+-   TypeScript
 -   Node.js
 -   Express.js
 -   Docker
@@ -12,7 +12,7 @@
 ### Clone project
 
 ```bash
-git clone https://github.com/DHushchin/BTC_UAH_API
+git clone https://github.com/GenesisEducationKyiv/hw1-se-school_2022-code-review-DHushchin
 ```
 
 ### Install dependencies
@@ -26,16 +26,11 @@ npm install
 -   Create .env file
 
 ```bash
-API_KEY='example_key'
 EMAIL_NAME='example@gmail.com'
 EMAIL_PASSWORD='example_password'
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
 ```
-
--   Fill values
-
-Notice that API_KEY is your CoinMarketCap API Key. So, it is necessary to sign up for a free Developer Portal account and copy your API Key.
 
 ## Usage
 
