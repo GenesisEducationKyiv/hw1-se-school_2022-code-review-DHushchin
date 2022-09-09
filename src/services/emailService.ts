@@ -1,8 +1,10 @@
-require('dotenv').config();
-const nodemailer = require('nodemailer');
-const createError = require('http-errors');
-const getRate = require('./rateService');
-const { readFile } = require('./fileService');
+import dotenv from 'dotenv';
+import nodemailer from 'nodemailer';
+import createError from 'http-errors';
+import getRate from './rateService';
+import fileService from './fileService';
+
+dotenv.config();
 
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -12,11 +14,11 @@ const transporter = nodemailer.createTransport({
         user: process.env.EMAIL_NAME,
         pass: process.env.EMAIL_PASSWORD,
     },
-});
+} as object);
 
-module.exports = async () => {
+export default async () => {
     try {
-        const emails = await readFile();
+        const emails = await fileService.readFile();
 
         if (emails.length === 0) {
             throw createError(400, 'No emails to send');
@@ -30,7 +32,7 @@ module.exports = async () => {
         };
 
         transporter.sendMail(mailOptions);
-    } catch (err) {
+    } catch (err: any) {
         throw createError(400, err.message);
     }
 };

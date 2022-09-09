@@ -1,0 +1,21 @@
+{
+    "defaultSeverity": "error",
+	"extends": [
+		"tslint:recommended"
+	],
+	"rules": {
+		"no-console": true,
+		"variable-name": [
+			true,
+			"allow-leading-underscore"
+		],
+		"no-unused-expression": false
+	},
+    "linterOptions": {
+        "exclude": [
+            "node_modules/**",
+            "src/server.ts",
+			"src/app.ts"
+        ]
+    }
+}

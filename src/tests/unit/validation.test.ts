@@ -1,4 +1,4 @@
-const isValid = require('../../utils/validation');
+import isValid from '../../utils/validation';
 
 describe('Email validation', () => {
     const validEmails = [

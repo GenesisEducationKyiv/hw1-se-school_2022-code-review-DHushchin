@@ -1,4 +1,4 @@
-const getRate = require('../../services/rateService');
+import getRate from '../../services/rateService';
 
 describe('getRate service test', () => {
     test('should return positive rate', async () => {
