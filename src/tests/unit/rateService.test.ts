@@ -1,4 +1,4 @@
-import getRate from '../../services/rateService';
+import getRate from '../../services/rate.client';
 
 describe('getRate service test', () => {
     test('should return positive rate', async () => {

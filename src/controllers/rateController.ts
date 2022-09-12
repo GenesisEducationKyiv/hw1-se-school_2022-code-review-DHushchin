@@ -1,4 +1,4 @@
-import getRate from '../services/rateService';
+import getRate from '../services/rate.client';
 import { Request, Response } from 'express';
 
 export default async (req: Request, res: Response) => {

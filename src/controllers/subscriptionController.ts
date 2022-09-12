@@ -1,11 +1,13 @@
-import subscribe from '../services/subscriptionService';
-import sendEmails from '../services/emailService';
+import subscribe from '../services/subscription.client';
+import sendEmails from '../services/email.client';
 import { Request, Response } from 'express';
 
 const subscriptionController = async (req: Request, res: Response): Promise<void> => {
     try {
         const email = req.body.email;
+
         await subscribe(email);
+
         res.status(200).json({
             message: 'Email subscribed successfully',
         });

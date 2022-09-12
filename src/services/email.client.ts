@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
 import createError from 'http-errors';
-import getRate from './rateService';
-import fileService from './fileService';
+import getRate from './rate.client';
+import FileEmailRepository from '../repository/email.repository';
+import config from '../config';
 
 dotenv.config();
 
@@ -18,7 +19,8 @@ const transporter = nodemailer.createTransport({
 
 export default async () => {
     try {
-        const emails = await fileService.readFile();
+        const repository = new FileEmailRepository(config.filePath);
+        const emails = await repository.read();
 
         if (emails.length === 0) {
             throw createError(400, 'No emails to send');

@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors';
 import isValid from '../utils/validation';
-import fileService from './fileService';
+import FileEmailRepository from '../repository/email.repository';
+import config from '../config';
 
 const isSubscribed = (emails: string[], email: string) => {
     return emails.includes(email);
@@ -12,7 +13,9 @@ export default async (email: string) => {
             throw createHttpError(400, 'Invalid email');
         }
 
-        const emails = await fileService.readFile();
+        const repository = new FileEmailRepository(config.filePath);
+
+        const emails = await repository.read();
 
         if (isSubscribed(emails, email)) {
             throw createHttpError(409, 'Email already subscribed');
@@ -20,7 +23,7 @@ export default async (email: string) => {
 
         emails.push(email);
 
-        await fileService.writeFile(JSON.stringify({ emails }));
+        await repository.write(JSON.stringify({ emails }));
     } catch (err: any) {
         throw createHttpError(err.status, err.message);
     }
