@@ -1,12 +1,12 @@
-import getRate from '../services/rate.client';
+import rateClient from '../services/rate/rate.client';
 import { Request, Response } from 'express';
 
 export default async (req: Request, res: Response) => {
     try {
-        res.status(200).json(await getRate());
+        const rateProvider = await rateClient.create();
+        const rate = await rateProvider.getRate();
+        res.status(200).json(await rateProvider.getRate());
     } catch (err) {
-        res.status(400).json({
-            message: `Bad request: ${err}`,
-        });
+        res.status(400).json(`${err}`);
     }
 };

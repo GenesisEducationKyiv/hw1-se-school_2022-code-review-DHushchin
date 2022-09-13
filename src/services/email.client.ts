@@ -1,9 +1,11 @@
 import dotenv from 'dotenv';
+import config from '../config';
 import nodemailer from 'nodemailer';
 import createError from 'http-errors';
-import getRate from './rate.client';
+
+import getRate from './rate/rate.client';
 import FileEmailRepository from '../repository/email.repository';
-import config from '../config';
+import rateClient from '../services/rate/rate.client';
 
 dotenv.config();
 
@@ -26,11 +28,14 @@ export default async () => {
             throw createError(400, 'No emails to send');
         }
 
+        const rateProvider = await rateClient.create();
+        const rate = await rateProvider.getRate();
+
         const mailOptions = {
             from: process.env.EMAIL_NAME,
             to: emails,
             subject: 'Bitcoin price',
-            text: `Bitcoin price is ${await getRate()} UAH`,
+            text: `Bitcoin price is ${rate} UAH`,
         };
 
         transporter.sendMail(mailOptions);

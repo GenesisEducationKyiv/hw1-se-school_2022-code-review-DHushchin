@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs/promises';
 import FileEmailRepository from '../../repository/email.repository';
 import config from '../../config';
