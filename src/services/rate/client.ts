@@ -1,11 +1,12 @@
 import createError from 'http-errors';
 
-import IRateProvider from './provider.interface';
-import CoinbaseRateProvider from './coinbase';
-import BinanceRateProvider from './binance';
-import CoinmarketcapRateProvider from './coinmarketcap';
+import IRateProvider from './providers/provider.interface';
+import CoinbaseRateProvider from './providers/coinbase';
+import BinanceRateProvider from './providers/binance';
+import CoinmarketcapRateProvider from './providers/coinmarketcap';
+import { IRateCache } from './client.cache';
 
-class RateClient {
+class RateClient implements IRateCache {
     private readonly provider: IRateProvider;
 
     constructor() {

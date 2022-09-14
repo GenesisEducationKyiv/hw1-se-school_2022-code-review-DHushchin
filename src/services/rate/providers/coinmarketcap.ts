@@ -1,12 +1,15 @@
 import axios from 'axios';
-import config from '../../config';
+import config from '../../../config';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-import AbstractRateProvider from './provider.interface';
+import AbstractRateProvider, { IRateProvider } from './provider.interface';
 
-export default class CoinmarketcapRateProvider extends AbstractRateProvider {
+export default class CoinmarketcapRateProvider
+    extends AbstractRateProvider
+    implements IRateProvider
+{
     private readonly url: string = config.COINMARKETCAP_ENDPOINT;
 
     public async getRate(): Promise<number> {

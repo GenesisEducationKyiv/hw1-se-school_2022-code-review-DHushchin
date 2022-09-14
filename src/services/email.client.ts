@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 import createError from 'http-errors';
 
 import FileEmailRepository from '../repository/email.repository';
-import rateClient from '../services/rate/rate.client';
+import rateClient from './rate/client';
 
 dotenv.config();
 

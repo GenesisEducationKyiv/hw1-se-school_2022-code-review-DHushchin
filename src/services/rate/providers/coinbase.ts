@@ -1,9 +1,9 @@
 import axios from 'axios';
-import config from '../../config';
+import config from '../../../config';
 
-import AbstractRateProvider from './provider.interface';
+import AbstractRateProvider, { IRateProvider } from './provider.interface';
 
-export default class CoinbaseRateProvider extends AbstractRateProvider {
+export default class CoinbaseRateProvider extends AbstractRateProvider implements IRateProvider {
     private readonly url: string = config.COINBASE_ENDPOINT;
 
     public async getRate(): Promise<number> {

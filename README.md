@@ -30,7 +30,6 @@ EMAIL_NAME='example@gmail.com'
 EMAIL_PASSWORD='example_password'
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
-CRYPTO_CURRENCY_PROVIDER="provider"
 ```
 
 ## Usage
