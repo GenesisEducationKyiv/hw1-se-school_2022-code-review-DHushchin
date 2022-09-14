@@ -1,33 +1,31 @@
-import dotenv from 'dotenv';
 import createError from 'http-errors';
 
-dotenv.config();
+import IRateProvider from './provider.interface';
+import CoinbaseRateProvider from './coinbase';
+import BinanceRateProvider from './binance';
+import CoinmarketcapRateProvider from './coinmarketcap';
 
-import IRateCreator from './interfaces/interface.creator';
-import BinanceRateCreator from './binance/binance.creator';
-import CoinbaseRateCreator from './coinbase/coinbase.creator';
+class RateClient {
+    private readonly provider: IRateProvider;
 
-export default class RateClient {
-    private rateCreator: IRateCreator;
+    constructor() {
+        const coinbaseProvider = new CoinbaseRateProvider();
+        const coinmarketcapProvider = new CoinmarketcapRateProvider();
+        const binanceProvider = new BinanceRateProvider();
 
-    private constructor(rateCreator: IRateCreator) {
-        this.rateCreator = rateCreator;
-    }
+        coinbaseProvider.setNext(coinmarketcapProvider);
+        coinmarketcapProvider.setNext(binanceProvider);
 
-    public static async create(): Promise<RateClient> {
-        const provider: string = process.env.CRYPTO_CURRENCY_PROVIDER || 'unknown';
-        switch (provider) {
-            case 'binance':
-                return new RateClient(new BinanceRateCreator());
-            case 'coinbase':
-                return new RateClient(new CoinbaseRateCreator());
-            default:
-                throw createError(400, 'Unknown provider');
-        }
+        this.provider = coinbaseProvider;
     }
 
     public async getRate(): Promise<number> {
-        const provider = await this.rateCreator.createProvider();
-        return provider.getRate();
+        try {
+            return await this.provider.getRate();
+        } catch (error) {
+            throw createError(400, 'Unknown provider');
+        }
     }
 }
+
+export default new RateClient();

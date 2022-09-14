@@ -3,7 +3,6 @@ import config from '../config';
 import nodemailer from 'nodemailer';
 import createError from 'http-errors';
 
-import getRate from './rate/rate.client';
 import FileEmailRepository from '../repository/email.repository';
 import rateClient from '../services/rate/rate.client';
 
@@ -28,8 +27,7 @@ export default async () => {
             throw createError(400, 'No emails to send');
         }
 
-        const rateProvider = await rateClient.create();
-        const rate = await rateProvider.getRate();
+        const rate = await rateClient.getRate();
 
         const mailOptions = {
             from: process.env.EMAIL_NAME,

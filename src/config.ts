@@ -5,4 +5,7 @@ export default {
     HOST: 'localhost',
     filePath: `${path.resolve(__dirname)}/data/emails.json`,
     filePathTest: `${path.resolve(__dirname)}/tests/data/emails.test.json`,
+    COINBASE_ENDPOINT: 'https://api.coinbase.com/v2/prices/BTC-UAH/buy',
+    BINANCE_ENDPOINT: 'https://api.binance.com/api/v3/ticker/price?symbol=BTCUAH',
+    COINMARKETCAP_ENDPOINT: 'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest',
 };
