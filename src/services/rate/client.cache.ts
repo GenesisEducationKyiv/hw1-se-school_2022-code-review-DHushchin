@@ -1,17 +1,18 @@
 import RateClient from './client';
+import RateLogger, { IRateLogger } from './logger';
 
-export interface IRateCache {
+export interface IRateClient {
     getRate(): Promise<number>;
 }
 
-class RateClientCached implements IRateCache {
+class RateClientCached implements IRateClient, IRateLogger {
     private cache: number | null;
     private readonly minToLive: number;
     private milsecToLive: number;
     private fetchDate: Date;
 
-    constructor() {
-        this.minToLive = 5;
+    constructor(minToLive: number = 5) {
+        this.minToLive = minToLive;
         this.milsecToLive = this.minToLive * 60 * 1000;
         this.fetchDate = new Date(0);
         this.cache = null;

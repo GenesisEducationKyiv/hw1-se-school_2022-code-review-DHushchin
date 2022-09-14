@@ -4,9 +4,9 @@ import IRateProvider from './providers/provider.interface';
 import CoinbaseRateProvider from './providers/coinbase';
 import BinanceRateProvider from './providers/binance';
 import CoinmarketcapRateProvider from './providers/coinmarketcap';
-import { IRateCache } from './client.cache';
+import { IRateClient } from './client.cache';
 
-class RateClient implements IRateCache {
+class RateClient implements IRateClient {
     private readonly provider: IRateProvider;
 
     constructor() {
