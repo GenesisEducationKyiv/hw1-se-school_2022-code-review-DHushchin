@@ -1,36 +1,33 @@
-import RateClient from './client';
-import RateLogger, { IRateLogger } from './logger';
+import { CacheContainer } from 'node-ts-cache';
+import { MemoryStorage } from 'node-ts-cache-storage-memory';
+import { IRateLogger } from './logger';
+
+import BaseRateClient from './client';
 
 export interface IRateClient {
     getRate(): Promise<number>;
 }
 
-class RateClientCached implements IRateClient, IRateLogger {
-    private cache: number | null;
+class CachedRateClient implements IRateClient, IRateLogger {
     private readonly minToLive: number;
-    private milsecToLive: number;
-    private fetchDate: Date;
+    private cachedContainer: CacheContainer;
 
     constructor(minToLive: number = 5) {
         this.minToLive = minToLive;
-        this.milsecToLive = this.minToLive * 60 * 1000;
-        this.fetchDate = new Date(0);
-        this.cache = null;
-    }
-
-    public isCachedExpired() {
-        return this.fetchDate.getTime() + this.milsecToLive < new Date().getTime();
+        this.cachedContainer = new CacheContainer(new MemoryStorage());
     }
 
     public async getRate() {
-        if (!this.cache || this.isCachedExpired()) {
-            this.cache = await RateClient.getRate();
-            this.fetchDate = new Date();
-            return this.cache;
-        } else {
-            return Promise.resolve(this.cache);
+        const cachedRate = await this.cachedContainer.getItem<number>('rate');
+
+        if (cachedRate) {
+            return cachedRate;
         }
+
+        const rate = await BaseRateClient.getRate();
+        await this.cachedContainer.setItem('rate', rate, { ttl: this.minToLive * 60 });
+        return rate;
     }
 }
 
-export default new RateClientCached();
+export default new CachedRateClient();

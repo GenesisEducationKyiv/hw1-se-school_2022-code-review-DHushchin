@@ -1,5 +1,5 @@
 import fs from 'fs/promises';
-import FileEmailRepository from '../../repository/email.repository';
+import FileEmailRepository from '../../repository/email/file.repository';
 import config from '../../config';
 
 describe('File service', () => {

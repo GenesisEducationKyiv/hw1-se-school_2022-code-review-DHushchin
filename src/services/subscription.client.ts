@@ -1,6 +1,6 @@
 import createHttpError from 'http-errors';
 import isValid from '../utils/validation';
-import FileEmailRepository from '../repository/email.repository';
+import FileEmailRepository from '../repository/email/file.repository';
 import config from '../config';
 
 const isSubscribed = (emails: string[], email: string) => {

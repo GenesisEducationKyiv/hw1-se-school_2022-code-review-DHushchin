@@ -5,11 +5,12 @@ import CoinbaseRateProvider from './providers/coinbase';
 import BinanceRateProvider from './providers/binance';
 import CoinmarketcapRateProvider from './providers/coinmarketcap';
 import { IRateClient } from './client.cache';
+import { IRateLogger } from './logger';
 
-class RateClient implements IRateClient {
-    private readonly provider: IRateProvider;
+class BaseRateClient implements IRateClient, IRateLogger {
+    private provider: IRateProvider;
 
-    constructor() {
+    public constructor() {
         const coinbaseProvider = new CoinbaseRateProvider();
         const coinmarketcapProvider = new CoinmarketcapRateProvider();
         const binanceProvider = new BinanceRateProvider();
@@ -29,4 +30,4 @@ class RateClient implements IRateClient {
     }
 }
 
-export default new RateClient();
+export default new BaseRateClient();

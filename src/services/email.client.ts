@@ -3,10 +3,11 @@ import config from '../config';
 import nodemailer from 'nodemailer';
 import createError from 'http-errors';
 
-import FileEmailRepository from '../repository/email.repository';
-import rateClient from './rate/client';
-
 dotenv.config();
+
+import FileEmailRepository from '../repository/email/file.repository';
+import CachedRateClient from './rate/client.cache';
+import RateLogger from './rate/logger';
 
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
@@ -27,6 +28,7 @@ export default async () => {
             throw createError(400, 'No emails to send');
         }
 
+        const rateClient = new RateLogger(CachedRateClient);
         const rate = await rateClient.getRate();
 
         const mailOptions = {

@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 
-import { IEmailRepository } from './email.repository.interface';
+import { IEmailRepository } from './repository.interface';
 
 class FileEmailRepository implements IEmailRepository {
     private dataPath: string;

@@ -2,7 +2,7 @@ import express from 'express';
 import request from 'supertest';
 import bodyParser from 'body-parser';
 import router from '../../routes/router';
-import FileEmailRepository from '../../repository/email.repository';
+import FileEmailRepository from '../../repository/email/file.repository';
 
 import config from '../../config';
 
