@@ -30,4 +30,4 @@ class CachedRateClient implements IRateClient, IRateLogger {
     }
 }
 
-export default new CachedRateClient();
+export default CachedRateClient;

@@ -28,7 +28,11 @@ export default async () => {
             throw createError(400, 'No emails to send');
         }
 
-        const rateClient = new RateLogger(CachedRateClient);
+        const rateClient =
+            process.env.NODE_ENV === 'test'
+                ? new CachedRateClient()
+                : new RateLogger(new CachedRateClient());
+
         const rate = await rateClient.getRate();
 
         const mailOptions = {

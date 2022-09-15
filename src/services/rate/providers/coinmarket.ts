@@ -6,10 +6,7 @@ dotenv.config();
 
 import AbstractRateProvider, { IRateProvider } from './provider.interface';
 
-export default class CoinmarketcapRateProvider
-    extends AbstractRateProvider
-    implements IRateProvider
-{
+export default class CoinmarketRateProvider extends AbstractRateProvider implements IRateProvider {
     private readonly url: string = config.COINMARKETCAP_ENDPOINT;
 
     public async getRate(): Promise<number> {
