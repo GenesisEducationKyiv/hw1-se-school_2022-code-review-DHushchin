@@ -1,7 +1,7 @@
 import express from 'express';
 
-import rateController from '../controllers/rateController';
-import subscription from '../controllers/subscriptionController';
+import rateController from '../controllers/rate.controller';
+import subscription from '../controllers/subscription.controller';
 
 class Router {
     public router: express.Router;

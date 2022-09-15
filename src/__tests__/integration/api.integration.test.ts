@@ -1,8 +1,10 @@
 import express from 'express';
 import request from 'supertest';
-import router from '../../routes/router';
-import fileService from '../../services/fileService';
 import bodyParser from 'body-parser';
+import router from '../../routes/router';
+import FileEmailRepository from '../../repository/email/file.repository';
+
+import config from '../../config';
 
 describe('Integration test for API', () => {
     const app = express();
@@ -46,6 +48,7 @@ describe('Integration test for API', () => {
     });
 
     afterAll(async () => {
-        await fileService.writeFile(JSON.stringify({ emails: [] }));
+        const repository = new FileEmailRepository(config.filePath);
+        await repository.write(JSON.stringify({ emails: [] }));
     });
 });
