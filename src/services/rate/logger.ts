@@ -1,10 +1,7 @@
+import config from '../../config';
 import { IRateClient } from './client.cache';
 
-export interface IRateLogger {
-    getRate(): Promise<number>;
-}
-
-class RateLogger implements IRateLogger {
+class RateLogger implements IRateClient {
     private wrappee: IRateClient;
 
     constructor(wrappee: IRateClient) {
@@ -13,7 +10,11 @@ class RateLogger implements IRateLogger {
 
     public async getRate(): Promise<number> {
         const rate = await this.wrappee.getRate();
-        console.log('Rate: ', rate);
+
+        if (config.NODE_ENV !== 'test') {
+            console.log(`Rate: ${rate}`);
+        }
+
         return rate;
     }
 }

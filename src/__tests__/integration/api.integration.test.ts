@@ -49,6 +49,6 @@ describe('Integration test for API', () => {
 
     afterAll(async () => {
         const repository = new FileEmailRepository(config.filePath);
-        await repository.write(JSON.stringify({ emails: [] }));
+        await repository.add(JSON.stringify({ emails: [] }));
     });
 });

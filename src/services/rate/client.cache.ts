@@ -1,31 +1,31 @@
 import { CacheContainer } from 'node-ts-cache';
 import { MemoryStorage } from 'node-ts-cache-storage-memory';
-import { IRateLogger } from './logger';
-
-import BaseRateClient from './client';
 
 export interface IRateClient {
     getRate(): Promise<number>;
 }
 
-class CachedRateClient implements IRateClient, IRateLogger {
+class CachedRateClient implements IRateClient {
     private readonly minToLive: number;
-    private cachedContainer: CacheContainer;
+    private static readonly cachedContainer: CacheContainer = new CacheContainer(
+        new MemoryStorage(),
+    );
+    private rateClient: IRateClient;
 
-    constructor(minToLive: number = 5) {
+    constructor(rateClient: IRateClient, minToLive: number = 0.5) {
+        this.rateClient = rateClient;
         this.minToLive = minToLive;
-        this.cachedContainer = new CacheContainer(new MemoryStorage());
     }
 
     public async getRate() {
-        const cachedRate = await this.cachedContainer.getItem<number>('rate');
+        const cachedRate = await CachedRateClient.cachedContainer.getItem<number>('rate');
 
         if (cachedRate) {
             return cachedRate;
         }
 
-        const rate = await BaseRateClient.getRate();
-        await this.cachedContainer.setItem('rate', rate, { ttl: this.minToLive * 60 });
+        const rate = await this.rateClient.getRate();
+        await CachedRateClient.cachedContainer.setItem('rate', rate, { ttl: this.minToLive * 60 });
         return rate;
     }
 }

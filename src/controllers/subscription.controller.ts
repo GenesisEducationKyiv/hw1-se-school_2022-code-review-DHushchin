@@ -11,8 +11,16 @@ const subscriptionController = async (req: Request, res: Response): Promise<void
         res.status(200).json({
             message: 'Email subscribed successfully',
         });
-    } catch (err: any) {
-        res.status(err.status).json(err.message);
+    } catch (error: any) {
+        if (error.name === 'ConflictError') {
+            res.status(409).json({
+                message: error.message,
+            });
+        } else {
+            res.status(400).json({
+                message: error.message,
+            });
+        }
     }
 };
 
@@ -23,8 +31,10 @@ const notificationController = async (req: Request, res: Response): Promise<void
         res.status(200).json({
             message: 'Emails sent successfully',
         });
-    } catch (err: any) {
-        res.status(err.status).json(err.message);
+    } catch (error: any) {
+        res.status(400).json({
+            message: error.message,
+        });
     }
 };
 

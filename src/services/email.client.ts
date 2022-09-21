@@ -1,49 +1,39 @@
-import dotenv from 'dotenv';
 import config from '../config';
 import nodemailer from 'nodemailer';
-import createError from 'http-errors';
-
-dotenv.config();
 
 import FileEmailRepository from '../repository/email/file.repository';
+import BaseRateClient from '../services/rate/client';
 import CachedRateClient from './rate/client.cache';
 import RateLogger from './rate/logger';
 
 const transporter = nodemailer.createTransport({
-    host: process.env.EMAIL_HOST,
-    port: process.env.EMAIL_PORT,
+    host: config.EMAIL_HOST,
+    port: config.EMAIL_PORT,
     secure: false,
     auth: {
-        user: process.env.EMAIL_NAME,
-        pass: process.env.EMAIL_PASSWORD,
+        user: config.EMAIL_NAME,
+        pass: config.EMAIL_PASSWORD,
     },
 } as object);
 
 export default async () => {
-    try {
-        const repository = new FileEmailRepository(config.filePath);
-        const emails = await repository.read();
+    const repository = new FileEmailRepository(config.filePath);
+    const emails = await repository.findAll();
 
-        if (emails.length === 0) {
-            throw createError(400, 'No emails to send');
-        }
-
-        const rateClient =
-            process.env.NODE_ENV === 'test'
-                ? new CachedRateClient()
-                : new RateLogger(new CachedRateClient());
-
-        const rate = await rateClient.getRate();
-
-        const mailOptions = {
-            from: process.env.EMAIL_NAME,
-            to: emails,
-            subject: 'Bitcoin price',
-            text: `Bitcoin price is ${rate} UAH`,
-        };
-
-        transporter.sendMail(mailOptions);
-    } catch (err: any) {
-        throw createError(400, err.message);
+    if (emails.length === 0) {
+        throw new Error('No emails to send');
     }
+
+    const rateClient = new RateLogger(new CachedRateClient(new BaseRateClient()));
+
+    const rate = await rateClient.getRate();
+
+    const mailOptions = {
+        from: config.EMAIL_NAME,
+        to: emails,
+        subject: 'Bitcoin price',
+        text: `Bitcoin price is ${rate} UAH`,
+    };
+
+    transporter.sendMail(mailOptions);
 };

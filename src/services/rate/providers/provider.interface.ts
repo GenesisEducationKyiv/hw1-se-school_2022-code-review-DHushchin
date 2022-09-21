@@ -1,5 +1,3 @@
-import createError from 'http-errors';
-
 export interface IRateProvider {
     setNext(next: IRateProvider): IRateProvider;
     getRate(): Promise<number>;
@@ -18,6 +16,6 @@ export default abstract class AbstractRateProvider implements IRateProvider {
             return this.nextProvider.getRate();
         }
 
-        return Promise.reject(createError(400, 'Unknown provider'));
+        return Promise.reject(new Error('No provider available'));
     }
 }

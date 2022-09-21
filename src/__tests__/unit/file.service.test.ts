@@ -7,20 +7,20 @@ describe('File service', () => {
 
     test('should write file', async () => {
         const writeFileSpy = jest.spyOn(fs, 'writeFile');
-        await repository.write('This is a test file.');
+        await repository.add('This is a test file.');
         expect(writeFileSpy).toHaveBeenCalledTimes(1);
         jest.clearAllMocks();
     });
 
     test('should read file', async () => {
-        await repository.write(JSON.stringify({ emails: ['test@test.com'] }));
-        const emails = await repository.read();
+        await repository.add(JSON.stringify({ emails: ['test@test.com'] }));
+        const emails = await repository.findAll();
         expect(emails).toEqual(['test@test.com']);
     });
 
     test('should clear file', async () => {
-        await repository.write(JSON.stringify({ emails: [] }));
-        const emails = await repository.read();
+        await repository.add(JSON.stringify({ emails: [] }));
+        const emails = await repository.findAll();
         expect(emails).toEqual([]);
     });
 });

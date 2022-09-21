@@ -1,13 +1,10 @@
-import createError from 'http-errors';
-
 import IRateProvider from './providers/provider.interface';
 import CoinbaseRateProvider from './providers/coinbase';
 import BinanceRateProvider from './providers/binance';
 import CoinmarketRateProvider from './providers/coinmarket';
 import { IRateClient } from './client.cache';
-import { IRateLogger } from './logger';
 
-class BaseRateClient implements IRateClient, IRateLogger {
+class BaseRateClient implements IRateClient {
     private provider: IRateProvider;
 
     public constructor() {
@@ -22,12 +19,8 @@ class BaseRateClient implements IRateClient, IRateLogger {
     }
 
     public async getRate(): Promise<number> {
-        try {
-            return await this.provider.getRate();
-        } catch (error) {
-            throw createError(400, 'Unknown provider');
-        }
+        return await this.provider.getRate();
     }
 }
 
-export default new BaseRateClient();
+export default BaseRateClient;
