@@ -2,9 +2,9 @@ import config from '../config';
 import nodemailer from 'nodemailer';
 
 import FileEmailRepository from '../repository/email/file.repository';
-import BaseRateClient from '../services/rate/client';
-import CachedRateClient from './rate/client.cache';
-import RateLogger from './rate/logger';
+import BaseRateClient from './rate/rate.client';
+import CachedRateClient from './rate/rate.cache';
+import RateLogger from './rate/rate.logger';
 
 const transporter = nodemailer.createTransport({
     host: config.EMAIL_HOST,

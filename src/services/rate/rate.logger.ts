@@ -1,5 +1,5 @@
 import config from '../../config';
-import { IRateClient } from './client.cache';
+import { IRateClient } from './rate.cache';
 
 class RateLogger implements IRateClient {
     private wrappee: IRateClient;

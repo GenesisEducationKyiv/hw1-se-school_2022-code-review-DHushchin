@@ -2,7 +2,7 @@ import IRateProvider from './providers/provider.interface';
 import CoinbaseRateProvider from './providers/coinbase';
 import BinanceRateProvider from './providers/binance';
 import CoinmarketRateProvider from './providers/coinmarket';
-import { IRateClient } from './client.cache';
+import { IRateClient } from './rate.cache';
 
 class BaseRateClient implements IRateClient {
     private provider: IRateProvider;

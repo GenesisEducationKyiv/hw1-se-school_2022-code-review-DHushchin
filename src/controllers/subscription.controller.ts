@@ -1,6 +1,7 @@
 import subscribe from '../services/subscription.client';
 import sendEmails from '../services/email.client';
 import { Request, Response } from 'express';
+import { HttpCode } from '../http-responses/http-code.enum';
 
 const subscriptionController = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -8,16 +9,16 @@ const subscriptionController = async (req: Request, res: Response): Promise<void
 
         await subscribe(email);
 
-        res.status(200).json({
+        res.status(HttpCode.OK).json({
             message: 'Email subscribed successfully',
         });
     } catch (error: any) {
         if (error.name === 'ConflictError') {
-            res.status(409).json({
+            res.status(HttpCode.CONFLICT).json({
                 message: error.message,
             });
         } else {
-            res.status(400).json({
+            res.status(HttpCode.BAD_REQUEST).json({
                 message: error.message,
             });
         }

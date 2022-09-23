@@ -16,7 +16,7 @@
             "node_modules/**",
             "src/server.ts",
 			"src/app.ts",
-			"src/services/rate/logger.ts"
+			"src/services/rate/rate.logger.ts"
         ]
     }
 }
