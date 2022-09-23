@@ -1,11 +1,15 @@
 # BTC_UAH_API
 
-## Stack Technologies
+## Technology stack
 
 -   TypeScript
--   Node.js
 -   Express.js
+-   Jest / Supertest
 -   Docker
+
+## Architecture
+![BTC TO UAH ARCH (1)](https://user-images.githubusercontent.com/65043455/192067123-8ef1ea32-21f0-4a31-8174-11f21ab91373.png)
+
 
 ## Installation
 
@@ -30,6 +34,7 @@ EMAIL_NAME='example@gmail.com'
 EMAIL_PASSWORD='example_password'
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
+COINMARKETCAP_API_KEY="example_api_key"
 ```
 
 ## Usage
@@ -38,6 +43,21 @@ EMAIL_PORT="587"
 
 ```bash
 npm start
+```
+
+### Linters
+
+```bash
+npm run format:check
+npm run format:fix
+npm run tslint:check
+npm run tslint:fix
+```
+
+### Testing
+
+```bash
+npm test
 ```
 
 ### Docker
