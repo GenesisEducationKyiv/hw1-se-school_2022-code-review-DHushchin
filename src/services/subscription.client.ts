@@ -1,7 +1,7 @@
 import isValid from '../utils/validation';
 import FileEmailRepository from '../repository/email/file.repository';
 import config from '../config';
-import ConflictError from '../http-responses/errors';
+import { ConflictError } from '../http-responses/errors';
 
 const isSubscribed = (emails: string[], email: string) => {
     return emails.includes(email);

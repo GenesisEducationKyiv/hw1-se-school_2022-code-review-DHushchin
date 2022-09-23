@@ -29,11 +29,11 @@ const notificationController = async (req: Request, res: Response): Promise<void
     try {
         await sendEmails();
 
-        res.status(200).json({
+        res.status(HttpCode.OK).json({
             message: 'Emails sent successfully',
         });
     } catch (error: any) {
-        res.status(400).json({
+        res.status(HttpCode.BAD_REQUEST).json({
             message: error.message,
         });
     }
