@@ -1,10 +1,10 @@
 import config from '../../config';
-import { IRateClient } from './rate.cache';
+import { IRateService } from './provider.chain';
 
-class RateLogger implements IRateClient {
-    private wrappee: IRateClient;
+class RateLogger implements IRateService {
+    private wrappee: IRateService;
 
-    constructor(wrappee: IRateClient) {
+    constructor(wrappee: IRateService) {
         this.wrappee = wrappee;
     }
 

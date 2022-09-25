@@ -1,16 +1,22 @@
-import BaseRateClient from '../services/rate/rate.client';
-import CachedRateClient from '../services/rate/rate.cache';
-import RateLogger from '../services/rate/rate.logger';
+import RateClient from '../services/rate/rate.client';
 import { Request, Response } from 'express';
-import { HttpCode } from '../http-responses/http-code.enum';
+import { HttpCode } from '../constants/http-codes.enum';
+import { HttpErrors } from '../constants/http-errors.enum';
+import { BadRequestError } from '../http-responses/exceptions';
 
 export default async (req: Request, res: Response) => {
     try {
-        const rateClient = new RateLogger(new CachedRateClient(new BaseRateClient()));
+        const rateClient = new RateClient();
         res.status(HttpCode.OK).json(await rateClient.getRate());
-    } catch (error: any) {
-        res.status(HttpCode.BAD_REQUEST).json({
-            message: error.message,
-        });
+    } catch (error) {
+        if (error instanceof BadRequestError) {
+            res.status(HttpCode.BAD_REQUEST).json({
+                message: error.message,
+            });
+        } else {
+            res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
+                message: HttpErrors.InternalServerError,
+            });
+        }
     }
 };

@@ -1,7 +1,8 @@
 import isValid from '../utils/validation';
 import FileEmailRepository from '../repository/email/file.repository';
 import config from '../config';
-import { ConflictError } from '../http-responses/errors';
+import { ConflictError } from '../http-responses/exceptions';
+import { BadRequestError } from '../http-responses/exceptions';
 
 const isSubscribed = (emails: string[], email: string) => {
     return emails.includes(email);
@@ -9,7 +10,7 @@ const isSubscribed = (emails: string[], email: string) => {
 
 export default async (email: string) => {
     if (!isValid(email)) {
-        throw new Error('Invalid email');
+        throw new BadRequestError('Invalid email');
     }
 
     const repository = new FileEmailRepository(config.filePath);

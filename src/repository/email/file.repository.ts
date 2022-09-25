@@ -10,19 +10,12 @@ class FileEmailRepository implements IEmailRepository {
     }
 
     public async findAll(): Promise<string[]> {
-        const emailsData: string = await fs
-            .readFile(this.dataPath, 'utf8')
-            .catch((error: string) => {
-                throw new Error(error);
-            });
-
+        const emailsData = await fs.readFile(this.dataPath, 'utf8');
         return JSON.parse(emailsData).emails;
     }
 
     public async add(data: string): Promise<void> {
-        await fs.writeFile(this.dataPath, data).catch((error: string) => {
-            throw new Error(error);
-        });
+        await fs.writeFile(this.dataPath, data);
     }
 }
 

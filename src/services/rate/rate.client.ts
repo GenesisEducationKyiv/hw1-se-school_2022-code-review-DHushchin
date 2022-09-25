@@ -1,26 +1,14 @@
-import IRateProvider from './providers/provider.interface';
-import CoinbaseRateProvider from './providers/coinbase';
-import BinanceRateProvider from './providers/binance';
-import CoinmarketRateProvider from './providers/coinmarket';
-import { IRateClient } from './rate.cache';
+import RateProvider from './provider.chain';
+import RateCache from './provider.cache';
+import RateLogger from './provider.logger';
+import { IRateService } from './provider.chain';
 
-class BaseRateClient implements IRateClient {
-    private provider: IRateProvider;
-
-    public constructor() {
-        const coinbaseProvider = new CoinbaseRateProvider();
-        const coinmarketRateProvider = new CoinmarketRateProvider();
-        const binanceProvider = new BinanceRateProvider();
-
-        coinbaseProvider.setNext(coinmarketRateProvider);
-        coinmarketRateProvider.setNext(binanceProvider);
-
-        this.provider = coinbaseProvider;
-    }
+class RateClient {
+    private rateProvider: IRateService = new RateLogger(new RateCache(new RateProvider()));
 
     public async getRate(): Promise<number> {
-        return await this.provider.getRate();
+        return await this.rateProvider.getRate();
     }
 }
 
-export default BaseRateClient;
+export default RateClient;

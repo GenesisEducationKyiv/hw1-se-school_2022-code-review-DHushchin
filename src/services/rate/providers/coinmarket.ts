@@ -10,7 +10,7 @@ export default class CoinmarketRateProvider extends AbstractRateProvider impleme
         try {
             const response = await axios.get(this.url, {
                 headers: {
-                    'X-CMC_PRO_API_KEY': config.COINMARKETCAP_API_KEY || '',
+                    'X-CMC_PRO_API_KEY': config.COINMARKETCAP_API_KEY,
                 },
                 params: {
                     symbol: 'BTC',

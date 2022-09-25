@@ -2,9 +2,8 @@ import config from '../config';
 import nodemailer from 'nodemailer';
 
 import FileEmailRepository from '../repository/email/file.repository';
-import BaseRateClient from './rate/rate.client';
-import CachedRateClient from './rate/rate.cache';
-import RateLogger from './rate/rate.logger';
+import RateClient from '../services/rate/rate.client';
+import { BadRequestError } from '../http-responses/exceptions';
 
 const transporter = nodemailer.createTransport({
     host: config.EMAIL_HOST,
@@ -14,18 +13,17 @@ const transporter = nodemailer.createTransport({
         user: config.EMAIL_NAME,
         pass: config.EMAIL_PASSWORD,
     },
-} as object);
+} as nodemailer.TransportOptions);
 
 export default async () => {
     const repository = new FileEmailRepository(config.filePath);
     const emails = await repository.findAll();
 
     if (emails.length === 0) {
-        throw new Error('No emails to send');
+        throw new BadRequestError('No emails to send');
     }
 
-    const rateClient = new RateLogger(new CachedRateClient(new BaseRateClient()));
-
+    const rateClient = new RateClient();
     const rate = await rateClient.getRate();
 
     const mailOptions = {
