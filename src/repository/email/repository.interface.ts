@@ -1,4 +1,4 @@
 export interface IEmailRepository {
-    read(): Promise<string[]>;
-    write(data: string): Promise<void>;
+    findAll(): Promise<string[]>;
+    add(email: string): Promise<void>;
 }

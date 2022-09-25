@@ -1,8 +1,5 @@
 import axios from 'axios';
 import config from '../../../config';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 import AbstractRateProvider, { IRateProvider } from './provider.interface';
 
@@ -13,7 +10,7 @@ export default class CoinmarketRateProvider extends AbstractRateProvider impleme
         try {
             const response = await axios.get(this.url, {
                 headers: {
-                    'X-CMC_PRO_API_KEY': process.env.COINMARKETCAP_API_KEY || '',
+                    'X-CMC_PRO_API_KEY': config.COINMARKETCAP_API_KEY,
                 },
                 params: {
                     symbol: 'BTC',

@@ -1,4 +1,4 @@
-import createError from 'http-errors';
+import { BadRequestError } from '../../../http-responses/exceptions';
 
 export interface IRateProvider {
     setNext(next: IRateProvider): IRateProvider;
@@ -18,6 +18,6 @@ export default abstract class AbstractRateProvider implements IRateProvider {
             return this.nextProvider.getRate();
         }
 
-        return Promise.reject(createError(400, 'Unknown provider'));
+        return Promise.reject(new BadRequestError('No provider available'));
     }
 }

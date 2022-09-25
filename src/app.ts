@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 
 import config from './config';
 import router from './routes/router';
+import { errorHandler } from './middlewares/error.middleware';
 
 export default class App {
     public app: express.Application;
