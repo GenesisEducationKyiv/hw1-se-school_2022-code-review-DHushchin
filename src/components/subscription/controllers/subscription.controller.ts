@@ -1,9 +1,9 @@
 import subscribe from '../services/subscription.client';
 import sendEmails from '../services/email.client';
 import { Request, Response } from 'express';
-import { HttpCode } from '../constants/http-codes.enum';
-import { HttpErrors } from '../constants/http-errors.enum';
-import { ConflictError, BadRequestError } from '../http-responses/exceptions';
+import { HttpCode } from '../../shared/constants/http-codes.enum';
+import { HttpErrors } from '../../shared/constants/http-errors.enum';
+import { ConflictError, BadRequestError } from '../../shared/http-responses/exceptions';
 
 const subscriptionController = async (req: Request, res: Response): Promise<void> => {
     try {

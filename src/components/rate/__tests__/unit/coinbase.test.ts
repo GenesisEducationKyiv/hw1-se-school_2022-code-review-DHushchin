@@ -1,17 +1,19 @@
-import BinanceRateProvider from '../../../services/rate/providers/binance';
-import config from '../../../config';
+import CoinbaseRateProvider from '../../services/providers/coinbase';
+import config from '../../../../config';
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-describe('binance test', () => {
+describe('coinbase test', () => {
     test('provider should return rate', async () => {
         const mock = new MockAdapter(axios);
-        mock.onGet(config.BINANCE_ENDPOINT).reply(200, {
-            price: 1000,
+        mock.onGet(config.COINBASE_ENDPOINT).reply(200, {
+            data: {
+                amount: 1000,
+            },
         });
 
-        const rateClient = new BinanceRateProvider();
+        const rateClient = new CoinbaseRateProvider();
         const rate = await rateClient.getRate();
 
         expect(typeof rate).toBe('number');
@@ -22,7 +24,7 @@ describe('binance test', () => {
         const mock = new MockAdapter(axios);
         mock.onGet('errorURL').reply(400);
 
-        const rateClient = new BinanceRateProvider();
+        const rateClient = new CoinbaseRateProvider();
         const expectedError = async () => await rateClient.getRate();
 
         return expect(expectedError()).rejects.toThrowError();

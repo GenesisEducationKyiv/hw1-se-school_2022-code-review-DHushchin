@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
-import FileEmailRepository from '../../repository/email/file.repository';
-import config from '../../config';
+import FileEmailRepository from '../../repository/file.repository';
+import config from '../../../../config';
 
 describe('File service', () => {
     const repository = new FileEmailRepository(config.filePathTest);

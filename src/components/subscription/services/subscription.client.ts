@@ -1,8 +1,8 @@
 import isValid from '../utils/validation';
-import FileEmailRepository from '../repository/email/file.repository';
-import config from '../config';
-import { ConflictError } from '../http-responses/exceptions';
-import { BadRequestError } from '../http-responses/exceptions';
+import FileEmailRepository from '../repository/file.repository';
+import config from '../../../config';
+import { ConflictError } from '../../shared/http-responses/exceptions';
+import { BadRequestError } from '../../shared/http-responses/exceptions';
 
 const isSubscribed = (emails: string[], email: string) => {
     return emails.includes(email);

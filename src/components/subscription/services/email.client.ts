@@ -1,9 +1,9 @@
-import config from '../config';
+import config from '../../../config';
 import nodemailer from 'nodemailer';
 
-import FileEmailRepository from '../repository/email/file.repository';
-import RateClient from '../services/rate/rate.client';
-import { BadRequestError } from '../http-responses/exceptions';
+import FileEmailRepository from '../repository/file.repository';
+import RateClient from '../../rate/services/rate.client';
+import { BadRequestError } from '../../shared/http-responses/exceptions';
 
 const transporter = nodemailer.createTransport({
     host: config.EMAIL_HOST,

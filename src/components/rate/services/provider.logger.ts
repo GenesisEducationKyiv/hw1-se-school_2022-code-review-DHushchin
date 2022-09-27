@@ -1,4 +1,4 @@
-import config from '../../config';
+import config from '../../../config';
 import { IRateService } from './provider.chain';
 
 class RateLogger implements IRateService {

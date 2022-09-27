@@ -1,5 +1,5 @@
-import CoinmarketRateProvider from '../../../services/rate/providers/coinmarket';
-import config from '../../../config';
+import CoinmarketRateProvider from '../../services/providers/coinmarket';
+import config from '../../../../config';
 import dotenv from 'dotenv';
 
 dotenv.config();

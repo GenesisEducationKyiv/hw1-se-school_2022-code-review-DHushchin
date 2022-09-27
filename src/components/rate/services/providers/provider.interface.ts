@@ -1,4 +1,4 @@
-import { BadRequestError } from '../../../http-responses/exceptions';
+import { BadRequestError } from '../../../shared/http-responses/exceptions';
 
 export interface IRateProvider {
     setNext(next: IRateProvider): IRateProvider;

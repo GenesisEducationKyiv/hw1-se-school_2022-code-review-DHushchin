@@ -1,8 +1,8 @@
-import RateClient from '../services/rate/rate.client';
+import RateClient from '../services/rate.client';
 import { Request, Response } from 'express';
-import { HttpCode } from '../constants/http-codes.enum';
-import { HttpErrors } from '../constants/http-errors.enum';
-import { BadRequestError } from '../http-responses/exceptions';
+import { HttpCode } from '../../shared/constants/http-codes.enum';
+import { HttpErrors } from '../../shared/constants/http-errors.enum';
+import { BadRequestError } from '../../shared/http-responses/exceptions';
 
 export default async (req: Request, res: Response) => {
     try {
