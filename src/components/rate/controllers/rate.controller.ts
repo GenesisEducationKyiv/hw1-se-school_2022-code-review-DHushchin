@@ -1,22 +1,23 @@
 import RateClient from '../services/rate.client';
-import { Request, Response } from 'express';
-import { HttpCode } from '../../shared/constants/http-codes.enum';
-import { HttpErrors } from '../../shared/constants/http-errors.enum';
-import { BadRequestError } from '../../shared/http-responses/exceptions';
+import { NextFunction, Request, Response } from 'express';
+import HttpCodes from '../../../constants/http-codes.enum';
 
-export default async (req: Request, res: Response) => {
-    try {
-        const rateClient = new RateClient();
-        res.status(HttpCode.OK).json(await rateClient.getRate());
-    } catch (error) {
-        if (error instanceof BadRequestError) {
-            res.status(HttpCode.BAD_REQUEST).json({
-                message: error.message,
-            });
-        } else {
-            res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
-                message: HttpErrors.InternalServerError,
-            });
+class RateController {
+    private rateClient: RateClient;
+
+    public constructor() {
+        this.rateClient = new RateClient();
+        this.getRate = this.getRate.bind(this);
+    }
+
+    public async getRate(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const rate = await this.rateClient.getRate();
+            res.status(HttpCodes.OK).json(rate);
+        } catch (error) {
+            next(error);
         }
     }
-};
+}
+
+export default new RateController();

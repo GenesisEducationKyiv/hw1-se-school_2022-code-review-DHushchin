@@ -14,7 +14,7 @@ class RateCache implements IRateService {
         this.minToLive = minToLive;
     }
 
-    public async getRate() {
+    public async getRate(): Promise<number> {
         const cachedRate = await RateCache.cachedContainer.getItem<number>('rate');
 
         if (cachedRate) {

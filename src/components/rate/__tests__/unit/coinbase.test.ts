@@ -7,7 +7,7 @@ import MockAdapter from 'axios-mock-adapter';
 describe('coinbase test', () => {
     test('provider should return rate', async () => {
         const mock = new MockAdapter(axios);
-        mock.onGet(config.COINBASE_ENDPOINT).reply(200, {
+        mock.onGet(config.get<string>('COINBASE_ENDPOINT')).reply(200, {
             data: {
                 amount: 1000,
             },

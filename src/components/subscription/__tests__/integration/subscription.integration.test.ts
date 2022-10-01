@@ -2,9 +2,8 @@ import express from 'express';
 import request from 'supertest';
 import bodyParser from 'body-parser';
 
-import router from '../../../../router';
+import router from '../../../../routes/router';
 import FileEmailRepository from '../../repository/file.repository';
-import config from '../../../../config';
 
 describe('Integration test for subscribe service', () => {
     const app = express();
@@ -14,7 +13,6 @@ describe('Integration test for subscribe service', () => {
 
     test('POST api/sendEmails - no emails to send', async () => {
         const { statusCode } = await request(app).post('/api/sendEmails');
-
         expect(statusCode).toBe(400);
     });
 
@@ -24,6 +22,14 @@ describe('Integration test for subscribe service', () => {
         });
 
         expect(statusCode).toBe(200);
+    });
+
+    test('POST api/subscribe - invalid email should not be subscribed', async () => {
+        const { statusCode } = await request(app).post('/api/subscribe').send({
+            email: '12345',
+        });
+
+        expect(statusCode).toBe(400);
     });
 
     test('POST api/subscribe - email already exists', async () => {
@@ -41,7 +47,7 @@ describe('Integration test for subscribe service', () => {
     });
 
     afterAll(async () => {
-        const repository = new FileEmailRepository(config.filePath);
-        await repository.add(JSON.stringify({ emails: [] }));
+        const repository = new FileEmailRepository();
+        await repository.clear();
     });
 });

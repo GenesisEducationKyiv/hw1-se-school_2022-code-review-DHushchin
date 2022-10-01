@@ -4,7 +4,11 @@ import RateLogger from './provider.logger';
 import { IRateService } from './provider.chain';
 
 class RateClient {
-    private rateProvider: IRateService = new RateLogger(new RateCache(new RateProvider()));
+    private rateProvider: IRateService;
+
+    constructor() {
+        this.rateProvider = new RateLogger(new RateCache(new RateProvider()));
+    }
 
     public async getRate(): Promise<number> {
         return await this.rateProvider.getRate();

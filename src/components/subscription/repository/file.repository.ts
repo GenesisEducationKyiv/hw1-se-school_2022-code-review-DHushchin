@@ -1,12 +1,13 @@
 import fs from 'fs/promises';
+import config from '../../../config';
 
-import { IEmailRepository } from './repository.interface';
+import IEmailRepository from './repository.interface';
 
 class FileEmailRepository implements IEmailRepository {
     private dataPath: string;
 
-    constructor(dataPath: string) {
-        this.dataPath = dataPath;
+    constructor() {
+        this.dataPath = config.get<string>('EMAILS_DATA_PATH');
     }
 
     public async findAll(): Promise<string[]> {
@@ -14,8 +15,14 @@ class FileEmailRepository implements IEmailRepository {
         return JSON.parse(emailsData).emails;
     }
 
-    public async add(data: string): Promise<void> {
-        await fs.writeFile(this.dataPath, data);
+    public async add(email: string): Promise<void> {
+        const emails = await this.findAll();
+        emails.push(email);
+        await fs.writeFile(this.dataPath, JSON.stringify({ emails }));
+    }
+
+    public async clear(): Promise<void> {
+        await fs.writeFile(this.dataPath, JSON.stringify({ emails: [] }));
     }
 }
 

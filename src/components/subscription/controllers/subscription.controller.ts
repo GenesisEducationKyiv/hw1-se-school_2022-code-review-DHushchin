@@ -1,54 +1,29 @@
-import subscribe from '../services/subscription.client';
-import sendEmails from '../services/email.client';
-import { Request, Response } from 'express';
-import { HttpCode } from '../../shared/constants/http-codes.enum';
-import { HttpErrors } from '../../shared/constants/http-errors.enum';
-import { ConflictError, BadRequestError } from '../../shared/http-responses/exceptions';
+import SubscriptionClient from '../services/subscription/subscription.client';
 
-const subscriptionController = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const email = req.body.email;
+import { NextFunction, Request, Response } from 'express';
+import HttpCodes from '../../../constants/http-codes.enum';
 
-        await subscribe(email);
+class SubscriptionController {
+    private subscriptionClient: SubscriptionClient;
 
-        res.status(HttpCode.OK).json({
-            message: 'Email subscribed successfully',
-        });
-    } catch (error) {
-        if (error instanceof ConflictError) {
-            res.status(HttpCode.CONFLICT).json({
-                message: error.message,
+    public constructor() {
+        this.subscriptionClient = new SubscriptionClient();
+        this.subscribe = this.subscribe.bind(this);
+    }
+
+    public async subscribe(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const email = req.body.email;
+
+            await this.subscriptionClient.subscribe(email);
+
+            res.status(HttpCodes.OK).json({
+                message: 'Email subscribed successfully',
             });
-        } else if (error instanceof BadRequestError) {
-            res.status(HttpCode.BAD_REQUEST).json({
-                message: error.message,
-            });
-        } else {
-            res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
-                message: HttpErrors.InternalServerError,
-            });
+        } catch (error) {
+            next(error);
         }
     }
-};
+}
 
-const notificationController = async (req: Request, res: Response): Promise<void> => {
-    try {
-        await sendEmails();
-
-        res.status(HttpCode.OK).json({
-            message: 'Emails sent successfully',
-        });
-    } catch (error) {
-        if (error instanceof BadRequestError) {
-            res.status(HttpCode.BAD_REQUEST).json({
-                message: error.message,
-            });
-        } else {
-            res.status(HttpCode.INTERNAL_SERVER_ERROR).json({
-                message: HttpErrors.InternalServerError,
-            });
-        }
-    }
-};
-
-export default Object.freeze({ subscriptionController, notificationController });
+export default new SubscriptionController();

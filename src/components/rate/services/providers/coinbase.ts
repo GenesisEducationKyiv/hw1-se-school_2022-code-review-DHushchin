@@ -4,7 +4,7 @@ import config from '../../../../config';
 import AbstractRateProvider, { IRateProvider } from './provider.interface';
 
 export default class CoinbaseRateProvider extends AbstractRateProvider implements IRateProvider {
-    private readonly url: string = config.COINBASE_ENDPOINT;
+    private readonly url: string = config.get<string>('COINBASE_ENDPOINT');
 
     public async getRate(): Promise<number> {
         try {

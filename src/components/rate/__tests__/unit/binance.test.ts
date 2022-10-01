@@ -7,7 +7,7 @@ import MockAdapter from 'axios-mock-adapter';
 describe('binance test', () => {
     test('provider should return rate', async () => {
         const mock = new MockAdapter(axios);
-        mock.onGet(config.BINANCE_ENDPOINT).reply(200, {
+        mock.onGet(config.get<string>('BINANCE_ENDPOINT')).reply(200, {
             price: 1000,
         });
 

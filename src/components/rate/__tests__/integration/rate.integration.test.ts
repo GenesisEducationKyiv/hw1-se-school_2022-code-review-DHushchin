@@ -1,7 +1,8 @@
 import express from 'express';
 import request from 'supertest';
 import bodyParser from 'body-parser';
-import router from '../../../../router';
+
+import router from '../../../../routes/router';
 
 describe('Integration test for rate service', () => {
     const app = express();

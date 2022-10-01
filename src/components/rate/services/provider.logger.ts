@@ -11,7 +11,7 @@ class RateLogger implements IRateService {
     public async getRate(): Promise<number> {
         const rate = await this.wrappee.getRate();
 
-        if (config.NODE_ENV !== 'test') {
+        if (config.get<string>('NODE_ENV') !== 'test') {
             console.log(`Rate: ${rate}`);
         }
 

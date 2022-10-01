@@ -1,10 +1,5 @@
 import CoinmarketRateProvider from '../../services/providers/coinmarket';
 import config from '../../../../config';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-dotenv;
 
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
@@ -12,9 +7,9 @@ import MockAdapter from 'axios-mock-adapter';
 describe('coinbase test', () => {
     test('provider should return rate', async () => {
         const mock = new MockAdapter(axios);
-        mock.onGet(config.COINMARKETCAP_ENDPOINT, {
+        mock.onGet(config.get<string>('COINMARKETCAP_ENDPOINT'), {
             headers: {
-                'X-CMC_PRO_API_KEY': process.env.COINMARKETCAP_API_KEY || '',
+                'X-CMC_PRO_API_KEY': config.get<string>('COINMARKETCAP_API_KEY'),
             },
             params: {
                 symbol: 'BTC',
