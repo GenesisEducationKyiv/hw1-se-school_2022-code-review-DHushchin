@@ -5,6 +5,7 @@
 	],
 	"rules": {
 		"no-console": true,
+		"typedef": [ true, "call-signature"],
 		"variable-name": [
 			true,
 			"allow-leading-underscore"
@@ -16,8 +17,8 @@
             "node_modules/**",
             "src/server.ts",
 			"src/app.ts",
-			"src/services/rate/provider.logger.ts",
-			"src/http-responses/exceptions.ts"
+			"src/components/rate/services/provider.logger.ts",
+			"src/components/shared/http-responses/exceptions.ts"
         ]
     }
 }

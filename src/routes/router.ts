@@ -1,21 +1,27 @@
-import express from 'express';
+import rateController from '../components/rate/controllers/rate.controller';
+import subscriptionController from '../components/subscription/controllers/subscription.controller';
+import notificationController from '../components/subscription/controllers/notification.controller';
+import emailValidator from '../middlewares/validation.middleware';
 
-import rateController from '../controllers/rate.controller';
-import subscription from '../controllers/subscription.controller';
+import { Router, Request, Response, NextFunction } from 'express';
 
-class Router {
-    public router: express.Router;
+class RouteCreator {
+    private router: Router;
 
     constructor() {
-        this.router = express.Router();
-        this.routes();
+        this.router = Router();
+        this.createRoutes();
     }
 
-    private routes() {
-        this.router.route('/rate').get(rateController);
-        this.router.post('/subscribe', subscription.subscriptionController);
-        this.router.post('/sendEmails', subscription.notificationController);
+    public getRouter(): Router {
+        return this.router;
+    }
+
+    private createRoutes(): void {
+        this.router.get('/rate', rateController.getRate);
+        this.router.post('/subscribe', emailValidator, subscriptionController.subscribe);
+        this.router.post('/sendEmails', notificationController.sendEmail);
     }
 }
 
-export default new Router().router;
+export default new RouteCreator().getRouter();
