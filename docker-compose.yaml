@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  btc_uah_app:
+    build: ./btc_uah_app
+    container_name: btc_uah_api
+    image: btc_uah_api
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - 'emails:/app/'
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: 'rabbitmq'
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+        - "5672:5672"
+        - "15672:15672"
+    volumes:
+        - '~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/'
+
+volumes:
+   emails: {}      

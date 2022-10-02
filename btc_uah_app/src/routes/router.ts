@@ -3,7 +3,7 @@ import subscriptionController from '../components/subscription/controllers/subsc
 import notificationController from '../components/subscription/controllers/notification.controller';
 import emailValidator from '../middlewares/validation.middleware';
 
-import { Router, Request, Response, NextFunction } from 'express';
+import { Router } from 'express';
 
 class RouteCreator {
     private router: Router;
