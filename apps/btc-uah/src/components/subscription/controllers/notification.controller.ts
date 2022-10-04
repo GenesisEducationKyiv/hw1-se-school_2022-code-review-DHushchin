@@ -1,5 +1,6 @@
 import EmailClient from '../services/notification/notification.client';
 import HttpCodes from '../../../constants/http-codes.enum';
+import logger from '../../logger/services/logger';
 
 import { NextFunction, Request, Response } from 'express';
 
@@ -14,7 +15,7 @@ class NotificationController {
     public async sendEmail(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             await this.emailClient.sendEmails();
-
+            logger.info('Emails sent');
             res.status(HttpCodes.OK).json({
                 message: 'Emails sent successfully',
             });

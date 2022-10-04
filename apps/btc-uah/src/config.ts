@@ -16,6 +16,7 @@ class Config {
     private EMAIL_HOST: string;
     private EMAIL_PORT: string;
     private NODE_ENV: string;
+    private AMQP_URL: string;
 
     constructor() {
         this.PORT = 3000;
@@ -36,6 +37,7 @@ class Config {
         this.EMAIL_HOST = process.env.EMAIL_HOST || '';
         this.EMAIL_PORT = process.env.EMAIL_PORT || '';
         this.NODE_ENV = process.env.NODE_ENV || '';
+        this.AMQP_URL = 'amqp://rabbitmq:5672' || '';
     }
 
     public get<T>(key: string): T {

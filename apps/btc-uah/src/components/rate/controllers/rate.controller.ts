@@ -1,6 +1,7 @@
 import RateClient from '../services/rate.client';
 import { NextFunction, Request, Response } from 'express';
 import HttpCodes from '../../../constants/http-codes.enum';
+import logger from '../../logger/services/logger';
 
 class RateController {
     private rateClient: RateClient;
@@ -13,6 +14,7 @@ class RateController {
     public async getRate(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const rate = await this.rateClient.getRate();
+            logger.info(`Rate: ${rate}`);
             res.status(HttpCodes.OK).json(rate);
         } catch (error) {
             next(error);

@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import HttpException from '../exceptions/HttpException';
 
+import logger from '../components/logger/services/logger';
+
 function errorMiddleware(
     error: HttpException,
     request: Request,
@@ -9,6 +11,7 @@ function errorMiddleware(
 ): void {
     const status = error.status || 500;
     const message = error.message || 'Something went wrong';
+    logger.error(String(error.message));
     response.status(status).send({
         status,
         message,
