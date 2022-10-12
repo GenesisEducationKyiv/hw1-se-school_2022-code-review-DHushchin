@@ -37,7 +37,7 @@ class Config {
         this.EMAIL_HOST = process.env.EMAIL_HOST || '';
         this.EMAIL_PORT = process.env.EMAIL_PORT || '';
         this.NODE_ENV = process.env.NODE_ENV || '';
-        this.AMQP_URL = 'amqp://rabbitmq:5672' || '';
+        this.AMQP_URL = 'amqp://guest:guest@rabbitmq:5672/';
     }
 
     public get<T>(key: string): T {

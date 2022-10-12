@@ -60,7 +60,7 @@ npm run tslint:fix
 npm test
 ```
 
-### Docker
+### Dockerfile
 
 -   Build image
 
@@ -102,4 +102,11 @@ make run
 make stop
 ```
 
-Navigate to localhost:3000/api/\*route\*. You should get your API running. Edit a component file in src, save it, and reload the project to see your changes.
+### Docker-compose
+
+-   Run services
+
+```bash
+docker-compose run --rm waitforrabbit
+docker-compose up btc-uah log-consumer
+```

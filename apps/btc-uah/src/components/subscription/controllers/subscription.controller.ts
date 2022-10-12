@@ -21,6 +21,7 @@ class SubscriptionController {
                 message: 'Email subscribed successfully',
             });
         } catch (error) {
+            logger.error(String(error));
             next(error);
         }
     }

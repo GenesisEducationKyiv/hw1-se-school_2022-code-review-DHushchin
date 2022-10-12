@@ -6,21 +6,29 @@ services:
         build: ./apps/btc-uah
         ports:
           - 3000:3000
-        volumes:
-          - emails:/app/
-  
+        depends_on:
+          - waitforrabbit
+
+    log-consumer:
+        container_name: log-consumer
+        build: ./apps/log-consumer
+        ports:
+          - 3001:3001
+        depends_on:
+          - waitforrabbit
+
     rabbitmq:
-        image: rabbitmq:3-management-alpine
+        image: rabbitmq:3-management
         container_name: rabbitmq
-        environment:
-          - RABBITMQ_DEFAULT_USER=guest
-          - RABBITMQ_DEFAULT_PASS=guest
+        hostname: rabbitmq
+        volumes:
+            - /var/lib/rabbitmq
         ports:
             - 5672:5672
             - 15672:15672
-        volumes:
-            - rabbitmq:/var/lib/rabbitmq
 
-volumes:
-    emails: {}
-    rabbitmq: {}
+    waitforrabbit:
+        image: dadarek/wait-for-dependencies
+        depends_on:
+            - rabbitmq 
+        command: rabbitmq:5672

@@ -27,6 +27,9 @@ class App {
     }
 
     public listen(): void {
+        logger.debug(`Host: ${config.get<string>('HOST')}`);
+        logger.debug(`Port: ${config.get<number>('PORT')}`);
+
         this.app.listen(config.get<number>('PORT'), () => {
             console.log(
                 `[server]: Server is running at http://${config.get<string>(
@@ -34,8 +37,6 @@ class App {
                 )}:${config.get<number>('PORT')}/api`,
             );
         });
-        logger.debug(`Host: ${config.get<string>('HOST')}`);
-        logger.debug(`Port: ${config.get<number>('PORT')}`);
     }
 
     private mountRoutes(): void {

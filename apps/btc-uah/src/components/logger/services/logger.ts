@@ -1,19 +1,19 @@
-import sendHandler from '../helpers/sendHandler';
+import sendHandler from '../helpers/send.handler';
 
 class Logger {
     public static info(message: string): void {
-        message = 'info: ' + message;
-        sendHandler(message, 'info');
+        message = `[${new Date().toLocaleString()}] ` + message;
+        sendHandler('info', message);
     }
 
     public static error(message: string): void {
-        message = 'error: ' + message;
-        sendHandler(message, 'error');
+        message = `[${new Date().toLocaleString()}] ` + message;
+        sendHandler('error', message);
     }
 
     public static debug(message: string): void {
-        message = 'debug: ' + message;
-        sendHandler(message, 'debug');
+        message = `[${new Date().toLocaleString()}] ` + message;
+        sendHandler('debug', message);
     }
 }
 

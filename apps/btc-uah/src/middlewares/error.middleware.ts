@@ -11,7 +11,6 @@ function errorMiddleware(
 ): void {
     const status = error.status || 500;
     const message = error.message || 'Something went wrong';
-    logger.error(String(error.message));
     response.status(status).send({
         status,
         message,
