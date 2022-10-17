@@ -4,22 +4,26 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 class Config {
-    private PORT: number;
+    private PORT: number | undefined;
     private HOST: string;
     private EMAILS_DATA_PATH: string;
     private COINBASE_ENDPOINT: string;
     private BINANCE_ENDPOINT: string;
     private COINMARKETCAP_ENDPOINT: string;
     private COINMARKETCAP_API_KEY: string;
-    private EMAIL_NAME: string;
-    private EMAIL_PASSWORD: string;
-    private EMAIL_HOST: string;
-    private EMAIL_PORT: string;
-    private NODE_ENV: string;
+    private EMAIL_NAME: string | undefined;
+    private EMAIL_PASSWORD: string | undefined;
+    private EMAIL_HOST: string | undefined;
+    private EMAIL_PORT: string | undefined;
+    private NODE_ENV: string | undefined;
     private AMQP_URL: string;
+    private AMQP_USER: string | undefined;
+    private AMQP_PASSWORD: string | undefined;
+    private AMQP_HOST: string | undefined;
+    private AMQP_PORT: string | undefined;
 
     constructor() {
-        this.PORT = 3000;
+        this.PORT = process.env.PORT ? Number(process.env.PORT) : undefined;
         this.HOST = 'localhost';
         this.EMAILS_DATA_PATH =
             process.env.NODE_ENV === 'test'
@@ -32,12 +36,16 @@ class Config {
         this.COINMARKETCAP_ENDPOINT =
             'https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest';
         this.COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY || '';
-        this.EMAIL_NAME = process.env.EMAIL_NAME || '';
-        this.EMAIL_PASSWORD = process.env.EMAIL_PASSWORD || '';
-        this.EMAIL_HOST = process.env.EMAIL_HOST || '';
-        this.EMAIL_PORT = process.env.EMAIL_PORT || '';
-        this.NODE_ENV = process.env.NODE_ENV || '';
-        this.AMQP_URL = 'amqp://guest:guest@rabbitmq:5672/';
+        this.EMAIL_NAME = process.env.EMAIL_NAME;
+        this.EMAIL_PASSWORD = process.env.EMAIL_PASSWORD;
+        this.EMAIL_HOST = process.env.EMAIL_HOST;
+        this.EMAIL_PORT = process.env.EMAIL_PORT;
+        this.NODE_ENV = process.env.NODE_ENV;
+        this.AMQP_USER = process.env.AMQP_USER;
+        this.AMQP_PASSWORD = process.env.AMQP_PASSWORD;
+        this.AMQP_HOST = process.env.AMQP_HOST;
+        this.AMQP_PORT = process.env.AMQP_PORT;
+        this.AMQP_URL = `amqp://${this.AMQP_USER}:${this.AMQP_PASSWORD}@${this.AMQP_HOST}:${this.AMQP_PORT}/`;
     }
 
     public get<T>(key: string): T {

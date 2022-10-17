@@ -20,7 +20,7 @@ class NotificationController {
                 message: 'Emails sent successfully',
             });
         } catch (error) {
-            logger.error(String(error));
+            logger.error(JSON.stringify(error));
             next(error);
         }
     }

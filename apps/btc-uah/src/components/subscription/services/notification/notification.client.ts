@@ -7,7 +7,7 @@ import ITransporter from './transporters/transporter.interface';
 import NodeMailerOptions from './transporter-options/nodemailer.options';
 import ITrasnporterOptions from './transporter-options/transporter-options.interface';
 
-import BadRequestError from '../../../../exceptions/BadRequestException';
+import BadRequestError from '../../../../exceptions/bad-request.exception';
 
 class EmailClient {
     private _emailRepository: IEmailRepository;

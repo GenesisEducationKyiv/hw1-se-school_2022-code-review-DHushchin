@@ -1,5 +1,5 @@
 import FileEmailRepository from '../../repository/file.repository';
-import ConflictError from '../../../../exceptions/ConflictException';
+import ConflictError from '../../../../exceptions/conflict.exception';
 
 class SubscriptionClient {
     private _repository: FileEmailRepository;

@@ -17,7 +17,7 @@ class RateController {
             logger.info(`Rate: ${rate}`);
             res.status(HttpCodes.OK).json(rate);
         } catch (error) {
-            logger.error(String(error));
+            logger.error(JSON.stringify(error));
             next(error);
         }
     }

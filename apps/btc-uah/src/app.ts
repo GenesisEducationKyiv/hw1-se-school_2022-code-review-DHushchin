@@ -14,7 +14,6 @@ class App {
         this.initializeMiddlewares();
         this.initializeErrorHandling();
         this.mountRoutes();
-        logger.info('Server is running');
     }
 
     private initializeMiddlewares() {
@@ -31,7 +30,7 @@ class App {
         logger.debug(`Port: ${config.get<number>('PORT')}`);
 
         this.app.listen(config.get<number>('PORT'), () => {
-            console.log(
+            logger.debug(
                 `[server]: Server is running at http://${config.get<string>(
                     'HOST',
                 )}:${config.get<number>('PORT')}/api`,
@@ -41,7 +40,6 @@ class App {
 
     private mountRoutes(): void {
         this.app.use('/api', router);
-        logger.info('Routes mounted');
     }
 }
 
