@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+    btc-uah:
+        container_name: btc_uah
+        build: ./apps/btc-uah
+        ports:
+          - 3000:3000
+        depends_on:
+          - waitforrabbit
+
+    log-consumer:
+        container_name: log-consumer
+        build: ./apps/log-consumer
+        ports:
+          - 3001:3001
+        depends_on:
+          - waitforrabbit
+
+    rabbitmq:
+        image: rabbitmq:3-management
+        container_name: rabbitmq
+        hostname: rabbitmq
+        volumes:
+            - /var/lib/rabbitmq
+        ports:
+            - 5672:5672
+            - 15672:15672
+
+    waitforrabbit:
+        image: dadarek/wait-for-dependencies
+        depends_on:
+            - rabbitmq 
+        command: rabbitmq:5672

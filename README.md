@@ -30,11 +30,16 @@ npm install
 -   Create .env file
 
 ```bash
-EMAIL_NAME='example@gmail.com'
-EMAIL_PASSWORD='example_password'
+EMAIL_NAME="example@gmail.com"
+EMAIL_PASSWORD="example_password"
 EMAIL_HOST="smtp.gmail.com"
 EMAIL_PORT="587"
 COINMARKETCAP_API_KEY="example_api_key"
+PORT="3000"
+AMQP_USER="user"
+AMQP_PASSWORD="password"
+AMQP_HOST="rabbitmq"
+AMQP_PORT="5672"
 ```
 
 ## Usage
@@ -60,7 +65,7 @@ npm run tslint:fix
 npm test
 ```
 
-### Docker
+### Dockerfile
 
 -   Build image
 
@@ -102,4 +107,11 @@ make run
 make stop
 ```
 
-Navigate to localhost:3000/api/\*route\*. You should get your API running. Edit a component file in src, save it, and reload the project to see your changes.
+### Docker-compose
+
+-   Run services
+
+```bash
+docker-compose run --rm waitforrabbit
+docker-compose up btc-uah log-consumer
+```
